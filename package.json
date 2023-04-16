@@ -1,0 +1,21 @@
+{
+  "name": "wasm-visualizations",
+  "version": "1.0.0",
+  "description": "Misc. graphical experiments with WebAssembly.",
+  "author": "Ashton Meuser",
+  "license": "MIT",
+  "devDependencies": {
+    "assemblyscript": "^0.27.2"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./build/release.js",
+      "types": "./build/release.d.ts"
+    }
+  },
+  "scripts": {
+    "build:interference": "npm run build --file=interference",
+    "build": "asc assembly/$npm_config_file.ts --target release --outFile build/$npm_config_file.wasm"
+  }
+}
