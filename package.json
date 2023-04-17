@@ -16,6 +16,7 @@
   },
   "scripts": {
     "build:interference": "npm run build --file=interference",
+    "build:mandelbrot": "npm run build --file=mandelbrot",
     "build": "asc assembly/$npm_config_file.ts --target release --outFile build/$npm_config_file.wasm"
   }
 }

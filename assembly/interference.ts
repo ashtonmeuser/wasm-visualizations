@@ -5,9 +5,6 @@ export let offset: usize = heap.alloc(0);
 // @ts-expect-error
 @external("env", "draw_image")
 declare function draw_image(p: usize, s: usize): void
-// @ts-expect-error
-@external("env", "draw_pixel")
-declare function draw_pixel(x: i32, y: i32, r: i32, g: i32, b: i32, a: i32): void
 
 // Set a single pixel's color
 function set(x: i32, y: i32, v: f32): void {
