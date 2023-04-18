@@ -2,7 +2,7 @@ const COLOR_ALIVE: u32 = 0xD392E6 | 1;
 const COLOR_DEAD: u32  = 0xA61B85 & ~1;
 const BIT_ROT: u32 = 10;
 export let offset: usize = heap.alloc(0);
-var width: i32, height: i32, area: i32;
+let width: i32, height: i32, area: i32;
 
 // Import functions
 // @ts-expect-error
@@ -11,11 +11,10 @@ declare function draw_image(p: usize, s: usize): void
 
 // Perform one tick
 export function update(tick: i64, time: f64): void {
-  // Copy output to input
-  memory.copy(offset, offset + (area << 2), area << 2);
+  memory.copy(offset, offset + (area << 2), area << 2); // Copy output to input
 
-  var w = width, h = height;
-  var hm1 = h - 1, wm1 = w - 1;
+  const w = width, h = height;
+  const hm1 = h - 1, wm1 = w - 1;
 
   // Universe is an infinite 2D orthogonal grid of square cells, each dead or alive
   for (let y = 0; y < h; ++y) {
@@ -110,6 +109,6 @@ function clear(): void {
 // Sets and fades output pixel
 // @ts-expect-error
 @inline function rot(x: u32, y: u32, v: u32): void {
-  var alpha = max<i32>((v >> 24) - BIT_ROT, 0);
+  const alpha = max<i32>((v >> 24) - BIT_ROT, 0);
   set(x, y, (alpha << 24) | (v & 0x00ffffff));
 }

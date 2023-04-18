@@ -18,7 +18,8 @@
     "build:interference": "npm run build --file=interference",
     "build:mandelbrot": "npm run build --file=mandelbrot",
     "build:life": "npm run build --file=life",
+    "build:wave": "npm run build --file=wave",
     "build": "asc assembly/$npm_config_file.ts --target release --outFile build/$npm_config_file.wasm",
-    "build:all": "npm run build:interference && npm run build:mandelbrot && npm run build:life"
+    "build:all": "npm run build:interference && npm run build:mandelbrot && npm run build:life && npm run build:wave"
   }
 }
