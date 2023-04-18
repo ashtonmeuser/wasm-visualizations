@@ -1,5 +1,5 @@
-let width: i32, height: i32;
 export let offset: usize = heap.alloc(0);
+let width: i32, height: i32;
 
 // Import functions
 // @ts-expect-error
@@ -20,16 +20,16 @@ function distance(x1: i32, y1: i32, x2: f32, y2: f32): f32 {
 }
 
 // Perform one tick
-export function update(t: f64): void {
-  const tick = <f32>t;
+export function update(tick: i64, time: f64): void {
+  const t = <f32>time;
   const w = <f32>width;
   const h = <f32>height;
   const hw = w * 0.5,
-      hh = h * 0.5;
-  const cx1 = (Mathf.sin(tick * 2) + Mathf.sin(tick      )) * hw * 0.3 + hw,
-      cy1 = (Mathf.cos(tick)                            ) * hh * 0.3 + hh,
-      cx2 = (Mathf.sin(tick * 4) + Mathf.sin(tick + 1.2)) * hw * 0.3 + hw,
-      cy2 = (Mathf.sin(tick * 3) + Mathf.cos(tick + 0.1)) * hh * 0.3 + hh;
+    hh = h * 0.5;
+  const cx1 = (Mathf.sin(t * 2) + Mathf.sin(t)      ) * hw * 0.3 + hw,
+        cy1 = (Mathf.cos(t)                         ) * hh * 0.3 + hh,
+        cx2 = (Mathf.sin(t * 4) + Mathf.sin(t + 1.2)) * hw * 0.3 + hw,
+        cy2 = (Mathf.sin(t * 3) + Mathf.cos(t + 0.1)) * hh * 0.3 + hh;
   const res = <f32>48 / Mathf.max(w, h);
   let y = 0;
   do {
@@ -49,5 +49,5 @@ export function update(t: f64): void {
 export function resize(w: i64, h: i64): void {
   width = <i32>w;
   height = <i32>h;
-  heap.realloc(offset, width * height * 4);
+  offset = heap.realloc(offset, width * height * 4);
 }

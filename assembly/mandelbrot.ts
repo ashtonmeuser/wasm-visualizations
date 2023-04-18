@@ -1,8 +1,8 @@
-import { gradient } from "./gradient"
+import { GRADIENT } from "./gradient"
 
-let width: u32, height: u32;
+const ITERATION_LIMIT: u32 = 40;
 export let offset: usize = heap.alloc(0);
-const iteration_limit: u32 = 40;
+let width: u32, height: u32;
 
 // Import functions
 // @ts-expect-error
@@ -10,14 +10,14 @@ const iteration_limit: u32 = 40;
 declare function draw_image(p: usize, s: usize): void
 
 // Draw mandelbrot
-export function update(t: f64): void {
+export function update(tick: i64, time: f64): void {
   var translateX = width  * (1.0 / 1.6);
   var translateY = height * (1.0 / 2.0);
   var scale      = 10.0 / min(3 * width, 4 * height);
   var realOffset = translateX * scale;
-  var invLimit   = 1.0 / iteration_limit;
+  var invLimit   = 1.0 / ITERATION_LIMIT;
 
-  var minIterations = min(8, iteration_limit);
+  var minIterations = min(8, ITERATION_LIMIT);
 
   for (let y: u32 = 0; y < height; ++y) {
     let imaginary = (y - translateY) * scale;
@@ -31,7 +31,7 @@ export function update(t: f64): void {
       while ((ixSq = ix * ix) + (iySq = iy * iy) <= 4.0) {
         iy = 2.0 * ix * iy + imaginary;
         ix = ixSq - iySq + real;
-        if (iteration >= iteration_limit) break;
+        if (iteration >= ITERATION_LIMIT) break;
         ++iteration;
       }
 
@@ -51,7 +51,7 @@ export function update(t: f64): void {
         index = <u8>(0xFF * clamp<f64>((iteration + 1 - fraction) * invLimit, 0.0, 1.0));
       }
 
-      store<u32>(offset + ((width * y + x) << 2), gradient[index + <u8>(t * 20.0)]);
+      store<u32>(offset + ((width * y + x) << 2), GRADIENT[index + <u8>(time * 20.0)]);
     }
   }
 
@@ -65,9 +65,7 @@ function clamp<T extends number>(value: T, minValue: T, maxValue: T): T {
 
 // Resize image
 export function resize(w: i64, h: i64): void {
-  if (w == width && h == height) return;
   width = <u32>w;
   height = <u32>h;
-  heap.free(offset); // Reallocation occasionally fails
-  offset = heap.alloc(width * height * 4);
+  offset = heap.realloc(offset, (width * height) << 2);
 }

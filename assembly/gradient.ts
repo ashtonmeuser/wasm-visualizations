@@ -2,7 +2,7 @@
 // Offsets = PoolRealArray( 0, 0.16, 0.42, 0.6425, 0.8575, 1 )
 // Colors = PoolColorArray( 0, 0.027451, 0.392157, 1, 0.12549, 0.419608, 0.796078, 1, 0.929412, 1, 1, 1, 1, 0.666667, 0, 1, 0, 0.00784314, 0, 1, 0, 0.027451, 0.392157, 1 )
 
-export const gradient: StaticArray<u32> = [
+export const GRADIENT: StaticArray<u32> = [
   0xFF640700,
   0xFF660900,
   0xFF690B01,
