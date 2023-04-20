@@ -58,14 +58,14 @@ export function update(tick: i64, time: f64): void {
   draw_image(offset, width * height * 4);
 }
 
-// Clamp a value between the given minimum and maximum
-function clamp<T extends number>(value: T, minValue: T, maxValue: T): T {
-  return min(max(value, minValue), maxValue);
-}
-
 // Resize image
 export function resize(w: i64, h: i64): void {
   width = <u32>w;
   height = <u32>h;
   offset = heap.realloc(offset, (width * height) << 2);
+}
+
+// Clamp a value between the given minimum and maximum
+function clamp<T extends number>(value: T, minValue: T, maxValue: T): T {
+  return min(max(value, minValue), maxValue);
 }
